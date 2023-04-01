@@ -27,6 +27,18 @@ const addUserToCollection = async (uri, payload) => {
   }
 }
 
+const addInterestsToCollection = async (uri, payload) => {
+  const client = new MongoClient(uri, { useNewUrlParser: true });
+  try {
+    const res = await client.connect();
+    const insertRes = await res.db('Eveny').collection('Users').insertMany(payload);
+    await res.close();
+    return insertRes;
+  } catch (ex) {
+    console.log(ex)
+  }
+}
+
 const getUsers = async (uri) => {
   const client = new MongoClient(uri, { useNewUrlParser: true });
   try {
@@ -38,4 +50,16 @@ const getUsers = async (uri) => {
     console.log(ex)
   }
 }
-export { connectToServer, addUserToCollection, getUsers };
+
+const getInterests = async (uri) => {
+  const client = new MongoClient(uri, { useNewUrlParser: true });
+  try {
+    const res = await client.connect();
+    const insertRes = await res.db('Eveny').collection('Interests').find().toArray();
+    await res.close();
+    return insertRes;
+  } catch (ex) {
+    console.log(ex)
+  }
+}
+export { connectToServer, addUserToCollection, addInterestsToCollection, getUsers, getInterests };
