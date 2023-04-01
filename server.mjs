@@ -1,6 +1,6 @@
 import express from 'express';
 import { config } from 'dotenv';
-import { addUserToCollection, getUsers } from './mongo.mjs';
+import { addUserToCollection, addInterestsToCollection, deleteInterestsToCollection, getUsers } from './mongo.mjs';
 import cors from "cors"
 
 // Loads .env file contents into process.env.
@@ -47,6 +47,19 @@ app.post('/api/v1/interests', cors(corsOptions), async(req, res) => {
     const body = req.body;
     console.log(body);
     const interests = await addInterestsToCollection(process.env.MONGO_URI, body);
+    res.send(interests);
+  } catch (ex) {
+    console.log(ex);
+    res.status(500);
+  }
+});
+
+app.delete('/api/v1/interests', cors(corsOptions), async(req, res) => {
+  console.log('request send');
+  try {
+    const body = req.body;
+    console.log(body);
+    const interests = await deleteInterestsToCollection(process.env.MONGO_URI, body);
     res.send(interests);
   } catch (ex) {
     console.log(ex);

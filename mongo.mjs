@@ -31,7 +31,19 @@ const addInterestsToCollection = async (uri, payload) => {
   const client = new MongoClient(uri, { useNewUrlParser: true });
   try {
     const res = await client.connect();
-    const insertRes = await res.db('Eveny').collection('Users').insertMany(payload);
+    const insertRes = await res.db('Eveny').collection('Interests').insertMany(payload);
+    await res.close();
+    return insertRes;
+  } catch (ex) {
+    console.log(ex)
+  }
+}
+
+const deleteInterestsToCollection = async (uri, payload) => {
+  const client = new MongoClient(uri, { useNewUrlParser: true });
+  try {
+    const res = await client.connect();
+    const insertRes = await res.db('Eveny').collection('Users').deleteMany(payload);
     await res.close();
     return insertRes;
   } catch (ex) {
@@ -62,4 +74,6 @@ const getInterests = async (uri) => {
     console.log(ex)
   }
 }
-export { connectToServer, addUserToCollection, addInterestsToCollection, getUsers, getInterests };
+
+
+export { connectToServer, addUserToCollection, addInterestsToCollection, getUsers, getInterests, deleteInterestsToCollection };
