@@ -1,6 +1,6 @@
 import express from 'express';
 import { config } from 'dotenv';
-import { addUserToCollection, addInterestsToCollection, deleteInterestsToCollection, getUsers } from './mongo.mjs';
+import { addUserToCollection, addInterestsToCollection, deleteInterestsToCollection, getUsers, getInterests } from './mongo.mjs';
 import cors from "cors"
 
 // Loads .env file contents into process.env.

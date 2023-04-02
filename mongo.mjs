@@ -12,7 +12,6 @@ const connectToServer = async (uri) => {
   } catch (ex) {
     console.log(ex)
   }
-
 }
 
 const addUserToCollection = async (uri, payload) => {
