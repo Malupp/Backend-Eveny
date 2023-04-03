@@ -74,5 +74,4 @@ const getInterests = async (uri) => {
   }
 }
 
-
 export { connectToServer, addUserToCollection, addInterestsToCollection, getUsers, getInterests, deleteInterestsToCollection };
