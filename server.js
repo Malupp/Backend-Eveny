@@ -6,6 +6,7 @@ import { config } from 'dotenv';
 import cors from 'cors';
 import { usersRouter } from './lib/routes/Users.js';
 import { interestsRouter } from './lib/routes/Interests.js';
+import { eventsRouter } from './lib/routes/Events.js';
 
 // Loads .env file contents into process.env.
 config();
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use("/users", usersRouter);
 app.use("/interests", interestsRouter);
 app.use('/pictures', createUploadRoute(upload));
+app.use("/events", eventsRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);

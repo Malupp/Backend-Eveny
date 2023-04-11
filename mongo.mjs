@@ -38,6 +38,18 @@ const addInterestsToCollection = async (uri, payload) => {
   }
 }
 
+const addEventToCollection = async (uri, payload) => {
+  const client = new MongoClient(uri, { useNewUrlParser: true });
+  try {
+    const res = await client.connect();
+    const insertRes = await res.db('Eveny').collection('Events').insertOne(payload);
+    await res.close();
+    return insertRes;
+  } catch (ex) {
+    console.log(ex)
+  }
+}
+
 const deleteInterestsToCollection = async (uri, payload) => {
   const client = new MongoClient(uri, { useNewUrlParser: true });
   try {
@@ -54,7 +66,7 @@ const getUsers = async (uri) => {
   const client = new MongoClient(uri, { useNewUrlParser: true });
   try {
     const res = await client.connect();
-    const insertRes = await res.db('Eveny').collection('Users').find().toArray();
+    const insertRes = await res.db('Eveny').collection('Users').findOne({email: "mario.riviere@mail.com"});
     await res.close();
     return insertRes;
   } catch (ex) {
@@ -74,4 +86,26 @@ const getInterests = async (uri) => {
   }
 }
 
-export { connectToServer, addUserToCollection, addInterestsToCollection, getUsers, getInterests, deleteInterestsToCollection };
+const getEvents = async (uri) => {
+  const client = new MongoClient(uri, { useNewUrlParser: true });
+  try {
+    const res = await client.connect();
+    const insertRes = await res.db('Eveny').collection('Events').find().toArray();
+    await res.close();
+    console.log(typeof insertRes);
+    return insertRes;
+  } catch (ex) {
+    console.log(ex)
+  }
+}
+
+export {
+  connectToServer,
+  addUserToCollection,
+  addInterestsToCollection,
+  addEventToCollection,
+  getUsers,
+  getInterests,
+  getEvents,
+  deleteInterestsToCollection
+};
