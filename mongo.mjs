@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 const connectToServer = async (uri) => {
   const client = new MongoClient(uri, { useNewUrlParser: true });
@@ -99,6 +99,18 @@ const getEvents = async (uri) => {
   }
 }
 
+const getEventById = async (id, uri) => {
+  const client = new MongoClient(uri, { useNewUrlParser: true });
+  try {
+    const res = await client.connect();
+    const event = await res.db('Eveny').collection('Events').findOne({ _id: new ObjectId(id) });
+    await res.close();
+    return event;
+  } catch (ex) {
+    console.log(ex);
+  }
+}
+
 export {
   connectToServer,
   addUserToCollection,
@@ -107,5 +119,6 @@ export {
   getUsers,
   getInterests,
   getEvents,
+  getEventById,
   deleteInterestsToCollection
 };
